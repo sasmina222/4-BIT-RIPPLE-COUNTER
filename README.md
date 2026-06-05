@@ -33,25 +33,44 @@ In timing diagram Q0 is changing as soon as the negative edge of clock pulse is 
  Developed by:SASMINA  S
  RegisterNumber:212225230254
  ```
- module digital9(out,clk,rst); 
- input clk,rst; 
- output reg [3:0]out; 
- always @ (posedge clk)
- begin 
- if(rst) 
- out<=0; 
- else 
- out <= out-1; 
- end endmodule
+module ex06(q, clk, reset); 
+output [3:0] q;
+input clk, reset;
+T_FF tffo(q[0], clk, reset); 
+T_FF tff1(q[1], q[0], reset); 
+T_FF tff2(q[2], q[1], reset); 
+T_FF tff3(q[3], q[2], reset); 
+endmodule
+
+module D_FF(q, d, clk, reset); 
+output q;
+input d, clk, reset;
+reg q;
+always @(posedge reset or negedge clk)
+ if (reset)
+q = 1'b0;
+ else
+q = d;
+endmodule
+
+module T_FF(q, clk, reset);
+output q;
+input clk, reset;
+wire d;
+D_FF dff0(q, d, clk, reset);
+not n1(d, q); 
+endmodule
 ```
 */
 
 **RTL LOGIC FOR 4 Bit Ripple Counter**
-<img width="578" height="243" alt="image" src="https://github.com/user-attachments/assets/e9f36231-7bdd-4c95-944b-bbd015267968" />
+[<img width="1017" height="296" alt="image" src="https://github.com/user-attachments/assets/12ff65a9-7d66-4bdd-ae82-3a2569d6b657" />
+
 
 
 **TIMING DIGRAMS FOR 4 Bit Ripple Counter**
-<img width="763" height="208" alt="image" src="https://github.com/user-attachments/assets/fbbf6279-efd8-49d9-9a6a-a00ec1f3e4e7" />
+<img width="766" height="116" alt="image" src="https://github.com/user-attachments/assets/4879b7c4-73dc-4e41-b1ec-3a9c1aaadce9" />
+
 
 
 **RESULTS**
